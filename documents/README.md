@@ -1,5 +1,5 @@
-Files in this directory are associated with the original work done in the metis library in the context of the diploma thesis "Development of a software library for machine learning applications on parallel computers" by Andreas Bampouris. This thesis was completed in 2018 in the Department of Electrical and Computer Engineering in University of Patras.
+# About
+Files in this directory are associated with the original work done for the metis library in the context of the diploma thesis "Development of a software library for machine learning applications on parallel computers" by Andreas Bampouris. The thesis was completed in October 2018 in the Department of Electrical and Computer Engineering in University of Patras.
 
-Abstract:
-
+# Abstract
 The objective of this diploma thesis is a software implementation of certain basic machine learning techniques in such way that they are able to make use of the parallel computing architectures present in modern computers. Models and meth- ods implemented include: linear regression, logistic regression, feedforward neural networks, the naive Bayes classifier, decision tree learning, and k-means clustering. The programming language used is C++ along with the linear algebra library Eigen, while the OpenMP standard was used to introduce parallelization. Real data from various sources were used for the purpose of testing the library’s capabilities, and the end result can be used to develop real applications.
