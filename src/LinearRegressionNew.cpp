@@ -2,7 +2,7 @@
 // Created by Andreas Bampouris on 11/10/2018.
 //
 
-#include "LinearRegressionNew.h"
+#include "../include/LinearRegressionNew.h"
 
 
 void metis::LinearRegressionNew::ordinaryLeastSquares(Eigen::MatrixXd *input, Eigen::MatrixXd *target) {
