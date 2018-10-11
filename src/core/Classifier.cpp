@@ -1,5 +1,5 @@
 //
-// Created by Andreas Bampouris on 11/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #include "Classifier.h"
@@ -7,7 +7,7 @@
 Eigen::VectorXi metis::Classifier::predict(Eigen::MatrixXd *input) const {
     
     unsigned nInstances = input->rows();
-    Eigen::MatrixXi prediction(nInstances);
+    Eigen::VectorXi prediction(nInstances);
     
     // Calculates the probability of each instance belonging to each class.
     Eigen::MatrixXd probabilities = predictProbabilities(input);

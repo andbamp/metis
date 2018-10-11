@@ -1,5 +1,5 @@
 //
-// Created by Andreas Bampouris on 11/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #include "Regressor.h"

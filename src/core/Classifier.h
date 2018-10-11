@@ -1,5 +1,5 @@
 //
-// Created by Andreas Bampouris on 11/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #ifndef METIS_CLASSIFIER_H
@@ -29,7 +29,6 @@ public:
      * @param input Input data. Each row represents an instance.
      */
     virtual Eigen::MatrixXd predictProbabilities(Eigen::MatrixXd *input) const = 0;
-    
     
     Eigen::VectorXi predict(Eigen::MatrixXd *input) const override;
     

@@ -1,5 +1,5 @@
 //
-// Created by Andreas Bampouris on 11/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #ifndef METIS_PREDICTOR_H
@@ -34,7 +34,7 @@ public:
      * @param verboseCycle Number of updates before user is informed for training state.
      */
     virtual void fit(Eigen::MatrixXd *input, T *target, Eigen::MatrixXd *valInput, T *valTarget,
-            unsigned verboseCycle) = 0;
+                     unsigned verboseCycle) = 0;
     virtual void fit(Eigen::MatrixXd *input, T *target, unsigned verboseCycle);
     virtual void fit(Eigen::MatrixXd *input, T *target, Eigen::MatrixXd *valInput, T *valTarget);
     virtual void fit(Eigen::MatrixXd *input, T *target);
