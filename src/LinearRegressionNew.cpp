@@ -53,6 +53,7 @@ void metis::LinearRegressionNew::fit(Eigen::MatrixXd *input, Eigen::MatrixXd *ta
         
     } else {
     
+        // Simple linear regression is a specialization of OLS that runs when there's only one attribute.
         if (_nAttributes == 1) simpleLinearRegression(input, target);
         else ordinaryLeastSquares(input, target);
     
@@ -77,6 +78,7 @@ Eigen::MatrixXd metis::LinearRegressionNew::predict(Eigen::MatrixXd *input) cons
     
     Eigen::MatrixXd predictions(input->rows(), _nModels);
     
+    // Prediction is calculated as a linear transformation of the inputs.
     predictions = (*input) * _coeff.transpose();
     predictions.rowwise() += _intercept.transpose();
     

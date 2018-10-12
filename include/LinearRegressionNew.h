@@ -20,6 +20,12 @@ private:
     bool _iterative = false;
     
     // Helper methods
+    /**
+     * Implements the ordinary least squares method of calculating the linear model's parameters.
+     *
+     * @param input Input data of training set. Each row represents an instance.
+     * @param target Output data of training set. Same number of rows as input.
+     */
     void ordinaryLeastSquares(Eigen::MatrixXd *input, Eigen::MatrixXd *target);
     void simpleLinearRegression(Eigen::MatrixXd *input, Eigen::MatrixXd *target);
 
@@ -27,7 +33,7 @@ public:
 
     // Access
     /**
-     * Fitting a linear model to a certain set of labeled data.
+     * Fits a linear model to a certain set of labeled data.
      *
      * @param input Input data of training set. Each row represents an instance.
      * @param target Output data of training set. Same number of rows as input.
@@ -50,6 +56,16 @@ public:
     Eigen::MatrixXd predict(Eigen::MatrixXd *input) const override;
     
     // Construction
+    /**
+     * Creates a linear regressor.
+     *
+     * @param iterative If true, gradient descent is used to determine the linear model's parameters.
+     *                  If false, the analytic method of ordinary least squares is used.
+     * @param iterations Maximum number of iterations. Applicable only in the case of iterative method being used.
+     * @param learnRate Learn rate for gradient descent. Applicable only in the case of iterative method being used.
+     * @param batchSize Size of the mini-batch. If set to 0, the full batch is used.
+     *                  Applicable only in the case of iterative method being used.
+     */
     LinearRegressionNew(bool iterative, unsigned iterations, double learnRate, unsigned batchSize);
     LinearRegressionNew();
     ~LinearRegressionNew();

@@ -10,9 +10,11 @@ void metis::Optimizer::transferFunction(double *prediction, unsigned transferFun
     switch (transferFunc) {
     
         case 0:
+            // If transferFunc == 0 the prediction is equal to the linear transformation that was given as input.
             break;
         
         case 1:
+            // If transferFunc == 1 the prediction is calculated as the sigmoid function of the linear transformation.
             *prediction *= -1;
             *prediction = std::exp(*prediction);
             *prediction += 1.0;
@@ -31,9 +33,11 @@ void metis::Optimizer::transferFunction(Eigen::VectorXd *prediction, unsigned tr
     switch (transferFunc) {
         
         case 0:
+            // If transferFunc == 0 the prediction is equal to the linear transformation that was given as input.
             break;
         
         case 1:
+            // If transferFunc == 1 the prediction is calculated as the sigmoid function of the linear transformation.
             prediction->array() *= -1;
             prediction->array() = prediction->array().exp();
             prediction->array() += 1.0;
@@ -65,11 +69,14 @@ void metis::Optimizer::batchGradientDescent(Eigen::MatrixXd *input, Eigen::Matri
             
             for (unsigned r = 0; r < nBatches; ++r) {
     
+                // Linear transformation is calculated for a mini-batch of examples.
                 probability = input->block(r * _batchSize, 0, _batchSize, _nModels) * w;
                 probability.array() += b;
-                
+    
+                // The actual predictions are found through (possibly) a non-linear transformation.
                 transferFunction(&probability, transferFunc);
-                
+    
+                // Errors are calculated and parameters are corrected.
                 probability -= target->block(r * _batchSize, c, _batchSize, 1);
                 dw.array() = probability.transpose() * input->block(r * _batchSize, 0, _batchSize, _nModels);
                 dw.array() /= _batchSize;
@@ -106,10 +113,14 @@ void metis::Optimizer::stochasticGradientDescent(Eigen::MatrixXd *input, Eigen::
         
             for (unsigned r = 0; r < nInstances; ++r) {
             
+                // Linear transformation is calculated for one example.
                 probability = (input->row(r) * w).coeff(0);
                 probability += b;
+    
+                // The actual prediction is found through (possibly) a non-linear transformation.
                 transferFunction(&probability, transferFunc);
                 
+                // Error is calculated and parameters are corrected.
                 probability -= target->coeff(r, c);
                 dw.array() = probability * input->row(r);
                 db = probability;
