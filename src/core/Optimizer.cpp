@@ -3,7 +3,7 @@
 //
 
 #include "Optimizer.h"
-
+#include <iostream>
 
 void metis::Optimizer::transferFunction(double *prediction, unsigned transferFunc) {
 
@@ -60,7 +60,7 @@ void metis::Optimizer::batchGradientDescent(Eigen::MatrixXd *input, Eigen::Matri
     for (unsigned c = 0; c < _nModels; ++c) {
         
         Eigen::VectorXd w = _coeff.transpose().col(c);
-        Eigen::VectorXd dw(_nModels);
+        Eigen::VectorXd dw(w.rows());
         double b = _intercept.coeff(c);
         double db;
         Eigen::VectorXd probability(_batchSize);
@@ -70,7 +70,7 @@ void metis::Optimizer::batchGradientDescent(Eigen::MatrixXd *input, Eigen::Matri
             for (unsigned r = 0; r < nBatches; ++r) {
     
                 // Linear transformation is calculated for a mini-batch of examples.
-                probability = input->block(r * _batchSize, 0, _batchSize, _nModels) * w;
+                probability = input->block(r * _batchSize, 0, _batchSize, w.rows()) * w;
                 probability.array() += b;
     
                 // The actual predictions are found through (possibly) a non-linear transformation.
@@ -78,7 +78,7 @@ void metis::Optimizer::batchGradientDescent(Eigen::MatrixXd *input, Eigen::Matri
     
                 // Errors are calculated and parameters are corrected.
                 probability -= target->block(r * _batchSize, c, _batchSize, 1);
-                dw.array() = probability.transpose() * input->block(r * _batchSize, 0, _batchSize, _nModels);
+                dw.array() = probability.transpose() * input->block(r * _batchSize, 0, _batchSize, w.rows());
                 dw.array() /= _batchSize;
                 db = probability.sum() / _batchSize;
                 

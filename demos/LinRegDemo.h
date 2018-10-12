@@ -5,41 +5,57 @@
 #include "../include/ToyDataSets.h"
 #include "../include/LinearRegression.h"
 
-void demoLinReg(unsigned nThreads) {
+void demoLinReg(bool iterative, unsigned iterations, double learnRate, unsigned batchSize, unsigned nThreads) {
 
     Eigen::setNbThreads(1);
     omp_set_num_threads(nThreads);
-
-    metis::DataLabeled *diabetes = metis::loadDiabetes();
-    diabetes->shuffle();
-    metis::DataLabeled *diabetesTest = diabetes->split(0.2);
-
-    metis::LinearRegression regressor = metis::LinearRegression();
-
+    
+    // Loading data containers.
+    metis::DataContainer *diabetes = metis::loadDiabetesContainer();
+//    diabetes->shuffle();
+    metis::DataContainer diabetesTest = diabetes->split(0.25);
+    
+    // Creating train set.
+    Eigen::MatrixXd input = diabetes->createNumericalMatrix({0,1,2,3,4,5,6,7,8,9});
+    Eigen::MatrixXd target = diabetes->createNumericalMatrix({10,11});
+    
+    // Creating test set.
+    Eigen::MatrixXd inputTest = diabetesTest.createNumericalMatrix({0,1,2,3,4,5,6,7,8,9});
+    Eigen::MatrixXd targetTest = diabetesTest.createNumericalMatrix({10,11});
+    
     double before = omp_get_wtime();
-    regressor.fit(diabetes);
+    
+    // Training.
+    metis::LinearRegression regressor(iterative, iterations, learnRate, batchSize);
+    regressor.fit(&input, &target);
+    
     double after = omp_get_wtime();
 
+    // Printing parameters.
     std::cout << "\nModel has been fitted:" << std::endl;
     std::cout << regressor.getCoefficients() << std::endl;
-    std::cout << std::endl << regressor.getIntercept() << std::endl;
+    std::cout << std::endl << regressor.getIntercepts() << std::endl;
 
-    Eigen::MatrixXd prediction(diabetesTest->instances(), diabetesTest->outputs());
-    prediction = regressor.predict(diabetesTest->getInputs()->getData());
+    // Making predictions.
+    Eigen::MatrixXd prediction(targetTest.rows(), targetTest.cols());
+    prediction = regressor.predict(&inputTest);
+    
+    // Comparing predictions and targets.
+    Eigen::MatrixXd comparison(targetTest.rows(), 2 * targetTest.cols());
+    comparison.leftCols(2) = targetTest;
+    comparison.rightCols(2) = prediction;
 
-    Eigen::MatrixXd answer(diabetesTest->instances(), 2 * diabetesTest->outputs());
-    answer.col(0) = diabetesTest->getOutputs()->getData()->col(0);
-    answer.col(1) = diabetesTest->getOutputs()->getData()->col(1);
-    answer.col(2) = prediction.col(0);
-    answer.col(3) = prediction.col(1);
-
-    std::cout << "\nPredictions and targets:" << std::endl;
-    std::cout << answer << std::endl;
+    std::cout << "\nTargets and predictions:" << std::endl;
+    std::cout << comparison << std::endl;
 
     std::cout << "\nMean squared error:" << std::endl;
-    std::cout << regressor.score(diabetesTest) << std::endl;
+    std::cout << regressor.score(&inputTest, &targetTest) << std::endl;
 
     std::cout << "\nComputation took:" << std::endl;
     std::cout << after - before << "sec" << std::endl;
 
+}
+
+void demoLinReg(bool iterative, unsigned nThreads) {
+    demoLinReg(iterative, 10, 0.01, 1, nThreads);
 }

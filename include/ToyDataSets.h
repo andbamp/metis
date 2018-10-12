@@ -6,6 +6,7 @@
 #define METIS_TOYDATASETS_H
 
 #include "DataLabeled.h"
+#include "DataContainer.h"
 
 namespace metis {
 
@@ -16,6 +17,8 @@ DataLabeled *loadWine();
 DataLabeled *loadMNIST(bool testSet);
 DataLabeled *loadMNIST();
 DataLabeled *loadBC();
+
+DataContainer *loadDiabetesContainer();
 
 }
 
