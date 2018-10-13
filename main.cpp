@@ -8,19 +8,19 @@
 #include "include/DataContainer.h"
 #include "include/LinearRegression.h"
 
-#define EIGEN_DONT_PARALLELIZE
+//#define EIGEN_DONT_PARALLELIZE
 
 int main() {
 
     srand(time(NULL));
     rand();
     
-    demoLinReg(true, 100000, 0.01, 1, 1);
-    demoLinReg(true, 100000, 0.01, 100, 1);
-    demoLinReg(true, 100000, 0.01, 0, 1);
-    demoLinReg(true, 1);
-    demoLinReg(false, 1);
-    
+    demoLinReg(true, 800000, 0.01, 64, 1, 1, false);
+    demoLinReg(true, 800000, 0.01, 64, 2, 1, false);
+    demoLinReg(true, 800000, 0.01, 64, 1, 2, false);
+    demoLinReg(false, 1, 1, false);
+    demoLinReg(false, 2, 1, false);
+
 //    demoLogRegIris(10, 0.1, 1, 1);
 //    demoLogRegIris(100, 0.1, 1, 1);
 //    demoLogRegIris(1000, 0.1, 1, 1);

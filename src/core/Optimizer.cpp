@@ -57,6 +57,9 @@ void metis::Optimizer::batchGradientDescent(Eigen::MatrixXd *input, Eigen::Matri
     if (_batchSize == 0) _batchSize = input->rows();
     unsigned nBatches = input->rows() / _batchSize;
     
+    // Current implementation appoints even columns to even threads and odd columns to odd threads.
+    // More testing needed to replace this parallelization with with a better one.
+#pragma omp parallel for
     for (unsigned c = 0; c < _nModels; ++c) {
         
         Eigen::VectorXd w = _coeff.transpose().col(c);
@@ -100,7 +103,10 @@ void metis::Optimizer::stochasticGradientDescent(Eigen::MatrixXd *input, Eigen::
                                                  unsigned transferFunc) {
     
     unsigned nInstances = input->rows();
-    
+
+    // Current implementation appoints even columns to even threads and odd columns to odd threads.
+    // More testing needed to replace this parallelization with a better one.
+#pragma omp parallel for
     for (unsigned c = 0; c < _nModels; ++c) {
         
         Eigen::VectorXd w = _coeff.transpose().col(c);
