@@ -18,8 +18,13 @@ DataLabeled *loadMNIST(bool testSet);
 DataLabeled *loadMNIST();
 DataLabeled *loadBC();
 
-DataContainer *loadDiabetesContainer();
 DataContainer *loadIrisContainer();
+//DataContainer *loadBanknotesContainer();
+DataContainer *loadDiabetesContainer();
+DataContainer *loadWineContainer();
+DataContainer *loadMNISTContainer(bool testSet);
+DataContainer *loadMNISTContainer();
+DataContainer *loadBCContainer();
 
 }
 

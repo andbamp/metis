@@ -17,15 +17,15 @@ int main() {
 
     srand(time(NULL));
     rand();
-    
+
 //    demoLinReg(true, 800000, 0.01, 64, 1, 1, false);
 //    demoLinReg(true, 800000, 0.01, 64, 2, 1, false);
 //    demoLinReg(true, 800000, 0.01, 64, 1, 2, false);
 //    demoLinReg(false, 1, 1, true);
 //    demoLinReg(false, 2, 1, false);
     
-    demoLogRegIris(3000000, 0.1, 64, 1, 2, false);
-    demoLogRegIris(3000000, 0.1, 64, 1, 1, false);
+//    demoLogRegIris(3000000, 0.1, 64, 1, 2, false);
+//    demoLogRegIris(3000000, 0.1, 64, 1, 1, false);
 
 //    demoLogRegIris(10, 0.1, 1, 1);
 //    demoLogRegIris(100, 0.1, 1, 1);

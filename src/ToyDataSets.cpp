@@ -126,6 +126,30 @@ metis::DataLabeled *metis::loadBC() {
 
 }
 
+metis::DataContainer *metis::loadIrisContainer() {
+    
+    std::string filePath = "../data/iris.data.txt";
+    std::string missingValue = "?";
+    
+    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {0,1,2,3}, {4});
+    data->standardize({0,1,2,3});
+    
+    return data;
+    
+}
+
+//metis::DataContainer *metis::loadBanknotesContainer() {
+//
+//    std::string filePath = "../data/data_banknote_authentication.txt";
+//    std::string missingValue = "?";
+//
+//    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {0,1,2,3}, {4});
+//    data->standardize({0,1,2,3});
+//
+//    return data;
+//
+//}
+
 metis::DataContainer *metis::loadDiabetesContainer() {
     
     std::string filePath = "../data/diabetes.tab.txt";
@@ -140,13 +164,70 @@ metis::DataContainer *metis::loadDiabetesContainer() {
     
 }
 
-metis::DataContainer *metis::loadIrisContainer() {
+metis::DataContainer *metis::loadWineContainer() {
     
-    std::string filePath = "../data/iris.data.txt";
+    std::string filePath = "../data/wine.data.txt";
     std::string missingValue = "?";
     
-    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {0,1,2,3}, {4});
-    data->standardize({0,1,2,3});
+    metis::DataContainer *data =
+            new metis::DataContainer(filePath, ',', missingValue, {1,2,3,4,5,6,7,8,9,10,11,12,13}, {0});
+    data->standardize({1,2,3,4,5,6,7,8,9,10,11,12,13});
+    
+    return data;
+    
+}
+
+metis::DataContainer *metis::loadMNISTContainer(bool testSet) {
+    
+    std::string filePath;
+    if (!testSet) filePath = "../data/mnist_train.csv";
+    else filePath = "../data/mnist_test.csv";
+    std::string missingValue = "?";
+    
+    std::vector<unsigned> attr;
+    for (unsigned a = 1; a < 785; ++a) attr.push_back(a);
+    
+    std::vector<std::map<std::string, int>> catStoI(1);
+    catStoI[0].insert(std::pair<std::string, int>("0", 0));
+    catStoI[0].insert(std::pair<std::string, int>("1", 1));
+    catStoI[0].insert(std::pair<std::string, int>("2", 2));
+    catStoI[0].insert(std::pair<std::string, int>("3", 3));
+    catStoI[0].insert(std::pair<std::string, int>("4", 4));
+    catStoI[0].insert(std::pair<std::string, int>("5", 5));
+    catStoI[0].insert(std::pair<std::string, int>("6", 6));
+    catStoI[0].insert(std::pair<std::string, int>("7", 7));
+    catStoI[0].insert(std::pair<std::string, int>("8", 8));
+    catStoI[0].insert(std::pair<std::string, int>("9", 9));
+    
+    std::vector<std::vector<std::string>> catItoS(1);
+    catItoS[0].push_back("0");
+    catItoS[0].push_back("1");
+    catItoS[0].push_back("2");
+    catItoS[0].push_back("3");
+    catItoS[0].push_back("4");
+    catItoS[0].push_back("5");
+    catItoS[0].push_back("6");
+    catItoS[0].push_back("7");
+    catItoS[0].push_back("8");
+    catItoS[0].push_back("9");
+    
+    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, attr, {0}, catItoS, catStoI);
+    data->standardize(attr);
+    
+    return data;
+    
+}
+
+metis::DataContainer *metis::loadMNISTContainer() {
+    return loadMNISTContainer(false);
+}
+
+metis::DataContainer *metis::loadBCContainer() {
+    
+    std::string filePath = "../data/breast-cancer.data.txt";
+    std::string missingValue = "?";
+    
+    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {}, {0,1,2,3,4,5,6,7,8,9});
     
     return data;
     

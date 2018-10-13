@@ -2,8 +2,8 @@
 // Created by Andreas Bampouris on 13/10/2018.
 //
 
-#include "LogisticRegressionNew.h"
-#include "DataContainer.h"
+#include "../include/LogisticRegressionNew.h"
+#include "../include/DataContainer.h"
 
 void metis::LogisticRegressionNew::fit(Eigen::MatrixXd *input, Eigen::ArrayXi *target,
                                        Eigen::MatrixXd *valInput, Eigen::ArrayXi *valTarget, unsigned verboseCycle) {

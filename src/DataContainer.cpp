@@ -12,9 +12,11 @@ Eigen::MatrixXd metis::DataContainer::createNumericalMatrix(std::vector<unsigned
     Eigen::MatrixXd data(_nInstances, columns.size());
     
     for (unsigned c = 0; c < columns.size(); ++c) {
-        if (_colIsAttribute[columns[c]]) data.col(c) = _data.col(_c2a[columns[c]]);
-        else if (_colIsCatAttribute[columns[c]]) data.col(c) = _catData.col(_c2ca[columns[c]]).cast<double>();
-        else {
+        if (_colIsAttribute[columns[c]]) {
+            data.col(c) = _data.col(_c2a[columns[c]]);
+        } else if (_colIsCatAttribute[columns[c]]) {
+            data.col(c) = _catData.col(_c2ca[columns[c]]).cast<double>();
+        } else {
             std::cerr << "Data for column " << c << " have not been loaded." << std::endl;
             exit(1);
         }
@@ -29,9 +31,11 @@ Eigen::MatrixXi metis::DataContainer::createCategoricalMatrix(std::vector<unsign
     Eigen::MatrixXi data(_nInstances, columns.size());
     
     for (unsigned c = 0; c < columns.size(); ++c) {
-        if (_colIsCatAttribute[columns[c]]) data.col(c) = _catData.col(_c2ca[columns[c]]);
-        else if (_colIsAttribute[columns[c]]) data.col(c) = _data.col(_c2a[columns[c]]).cast<int>();
-        else {
+        if (_colIsCatAttribute[columns[c]]) {
+            data.col(c) = _catData.col(_c2ca[columns[c]]);
+        } else if (_colIsAttribute[columns[c]]) {
+            data.col(c) = _data.col(_c2a[columns[c]]).cast<int>();
+        } else {
             std::cerr << "Data for column " << c << " have not been loaded." << std::endl;
             exit(1);
         }
@@ -45,9 +49,11 @@ Eigen::ArrayXi metis::DataContainer::createClassArray(unsigned column) {
     
     Eigen::ArrayXi data(_nInstances);
     
-    if (_colIsCatAttribute[column]) data = _catData.col(_c2ca[column]);
-    else if (_colIsAttribute[column]) data = _data.col(_c2a[column]).cast<int>();
-    else {
+    if (_colIsCatAttribute[column]) {
+        data = _catData.col(_c2ca[column]);
+    } else if (_colIsAttribute[column]) {
+        data = _data.col(_c2a[column]).cast<int>();
+    } else {
         std::cerr << "Data for column " << column << " have not been loaded." << std::endl;
         exit(1);
     }
@@ -68,6 +74,7 @@ Eigen::MatrixXd metis::DataContainer::createBinaryMatrix(unsigned column) {
     
     unsigned nCategories = _nCategories[_c2ca[column]];
     
+    // If column and row are the same, 1.0. Otherwise 0.0.
     double binLookup[nCategories][nCategories];
     for (unsigned i = 0; i < nCategories; ++i) {
         for (unsigned j = 0; j < nCategories; ++j) {
@@ -173,6 +180,7 @@ void metis::DataContainer::standardize(std::vector<unsigned> columns) {
         
         if (_colIsAttribute[columns[c]]) {
             
+            // Standardization
             mean.coeffRef(c) = _data.col(_c2a[columns[c]]).mean();
             std.coeffRef(c) = std::sqrt(
                     (_data.col(_c2a[columns[c]]).array() - mean.coeff(c)).square().sum() / (_nInstances - 1) );
@@ -213,6 +221,7 @@ void metis::DataContainer::rescale(std::vector<unsigned> columns) {
         
     }
     
+    // Data are scaled to unit length.
     scale = std::sqrt(scale / columns.size());
     
     for (unsigned c = 0; c < columns.size(); ++c) _data.col(columns[c]) /= scale;
@@ -310,10 +319,12 @@ void metis::DataContainer::readFile(std::string &filePath, char separatorChar, s
             
             unscrambler = std::istringstream(rowData);
             
+            // Reads a line and distributes values of relevant columns between _data and _catData.
             while (getline(unscrambler, colData, separatorChar)) {
                 
                 if (_colIsAttribute[col] && colData[0] != 0) {
                     
+                    // FIX? Sets -99 (not ideal) to a missing value and also marks it as missing.
                     if (colData == missingValue) {
                         colData = "-99";
                         _missingValues.push_back({row, col});
@@ -398,7 +409,7 @@ metis::DataContainer::DataContainer(std::string &filePath, char separatorChar, s
     _data.resize(_nInstances, _nAttributes);
     _catData.resize(_nInstances, _nCatAttributes);
     
-    // Correlating columns with attributes
+    // Correlating ArrayXX columns with file attributes.
     _colIsAttribute.resize(nCols);
     _colIsCatAttribute.resize(nCols);
     for (unsigned c = 0; c < nCols; ++c) {
