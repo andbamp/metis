@@ -70,15 +70,48 @@ Eigen::MatrixXd metis::DataContainer::createBinaryMatrix(unsigned column) {
     
     double binLookup[nCategories][nCategories];
     for (unsigned i = 0; i < nCategories; ++i) {
-        for (unsigned j = 0; j < nCategories; ++j)
+        for (unsigned j = 0; j < nCategories; ++j) {
             binLookup[i][j] = 0.0;
+        }
         binLookup[i][i] = 1.0;
     }
     
     Eigen::MatrixXd newData(_nInstances, nCategories);
-    for (unsigned i = 0; i < _nInstances; ++i)
-        for (unsigned c = 0; c < nCategories; ++c)
+    for (unsigned i = 0; i < _nInstances; ++i) {
+        for (unsigned c = 0; c < nCategories; ++c) {
             newData.coeffRef(i, c) = binLookup[_catData.coeff(i, _c2ca[column])][c];
+        }
+    }
+    
+    return newData;
+    
+}
+
+Eigen::MatrixXd metis::DataContainer::convertToBinaryMatrix(Eigen::ArrayXi *data) {
+    
+    unsigned nInstances = data->rows();
+    
+    unsigned nCategories = 0;
+    for (unsigned i = 0; i < nInstances; ++i) {
+        if (data->coeff(i) >= nCategories) {
+            nCategories = data->coeff(i) + 1;
+        }
+    }
+    
+    double binLookup[nCategories][nCategories];
+    for (unsigned i = 0; i < nCategories; ++i) {
+        for (unsigned j = 0; j < nCategories; ++j) {
+            binLookup[i][j] = 0.0;
+        }
+        binLookup[i][i] = 1.0;
+    }
+    
+    Eigen::MatrixXd newData(nInstances, nCategories);
+    for (unsigned i = 0; i < nInstances; ++i) {
+        for (unsigned c = 0; c < nCategories; ++c) {
+            newData.coeffRef(i, c) = binLookup[data->coeff(i)][c];
+        }
+    }
     
     return newData;
     

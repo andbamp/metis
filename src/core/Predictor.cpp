@@ -20,4 +20,4 @@ void metis::Predictor<T>::fit(Eigen::MatrixXd *input, T *target) {
 }
 
 template class metis::Predictor<Eigen::MatrixXd>;
-template class metis::Predictor<Eigen::MatrixXi>;
+template class metis::Predictor<Eigen::ArrayXi>;

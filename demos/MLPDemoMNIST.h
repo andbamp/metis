@@ -30,21 +30,21 @@ void demoMLPMNIST(std::vector<unsigned> hiddenLayers, std::vector<unsigned> acti
     Eigen::MatrixXd predictionProb(mnistTest->instances(), mnist->classes(0));
     predictionProb = clf.predictProbabilities(mnistTest->getInputs());
 
-//    Eigen::MatrixXd comparison(mnistTest->instances(), 2+mnist->classes(0));
-//    comparison.col(0) = mnistTest->getOutputs()->getData()->col(0);
-//    comparison.col(1) = predictions;
-//    comparison.col(2) = predictionProb.row(0).transpose();
-//    comparison.col(3) = predictionProb.row(1).transpose();
-//    comparison.col(4) = predictionProb.row(2).transpose();
-//    comparison.col(5) = predictionProb.row(3).transpose();
-//    comparison.col(6) = predictionProb.row(4).transpose();
-//    comparison.col(7) = predictionProb.row(5).transpose();
-//    comparison.col(8) = predictionProb.row(6).transpose();
-//    comparison.col(9) = predictionProb.row(7).transpose();
-//    comparison.col(10) = predictionProb.row(8).transpose();
-//    comparison.col(11) = predictionProb.row(9).transpose();
-//
-//    std::cout << comparison << std::endl;
+    Eigen::MatrixXd comparison(mnistTest->instances(), 2+mnist->classes(0));
+    comparison.col(0) = mnistTest->getOutputs()->getData()->col(0);
+    comparison.col(1) = predictions;
+    comparison.col(2) = predictionProb.row(0).transpose();
+    comparison.col(3) = predictionProb.row(1).transpose();
+    comparison.col(4) = predictionProb.row(2).transpose();
+    comparison.col(5) = predictionProb.row(3).transpose();
+    comparison.col(6) = predictionProb.row(4).transpose();
+    comparison.col(7) = predictionProb.row(5).transpose();
+    comparison.col(8) = predictionProb.row(6).transpose();
+    comparison.col(9) = predictionProb.row(7).transpose();
+    comparison.col(10) = predictionProb.row(8).transpose();
+    comparison.col(11) = predictionProb.row(9).transpose();
+
+    std::cout << comparison << std::endl;
 
     std::cout << "\nAccuracy on test set:" << std::endl;
     std::cout << clf.score(mnistTest) << std::endl;

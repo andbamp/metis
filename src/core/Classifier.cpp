@@ -4,10 +4,10 @@
 
 #include "Classifier.h"
 
-Eigen::VectorXi metis::Classifier::predict(Eigen::MatrixXd *input) const {
+Eigen::ArrayXi metis::Classifier::predict(Eigen::MatrixXd *input) const {
     
     unsigned nInstances = input->rows();
-    Eigen::VectorXi prediction(nInstances);
+    Eigen::ArrayXi prediction(nInstances);
     
     // Calculates the probability of each instance belonging to each class.
     Eigen::MatrixXd probabilities = predictProbabilities(input);
@@ -16,24 +16,27 @@ Eigen::VectorXi metis::Classifier::predict(Eigen::MatrixXd *input) const {
     // ie. chooses the class with maximum probability for each instance.
     double predictedProbability;
     for (unsigned i = 0; i < nInstances; ++i) {
+        
         prediction.coeffRef(i) = 0;
         predictedProbability = probabilities.coeff(i, 0);
+        
         for (unsigned c = 1; c < _nClasses; ++c) {
             if (probabilities.coeff(i, c) > predictedProbability) {
                 prediction.coeffRef(i) = c;
                 predictedProbability = probabilities.coeff(i, c);
             }
         }
+        
     }
     
     return prediction;
     
 }
 
-double metis::Classifier::score(Eigen::MatrixXd *input, Eigen::VectorXi *target) const {
+double metis::Classifier::score(Eigen::MatrixXd *input, Eigen::ArrayXi *target) const {
     
     unsigned nInstances = input->rows();
-    Eigen::VectorXi predictions(nInstances);
+    Eigen::ArrayXi predictions(nInstances);
     
     // Determines class of each instance.
     predictions = predict(input);

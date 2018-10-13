@@ -39,6 +39,7 @@ void demoLinReg(bool iterative, unsigned iterations, double learnRate, unsigned 
     double after = omp_get_wtime();
 
     if (verbose) {
+        
         // Printing parameters.
         std::cout << "\nModel has been fitted:" << std::endl;
         std::cout << regressor.getCoefficients() << std::endl;
@@ -50,11 +51,12 @@ void demoLinReg(bool iterative, unsigned iterations, double learnRate, unsigned 
     
         // Comparing predictions and targets.
         Eigen::MatrixXd comparison(targetTest.rows(), 2 * targetTest.cols());
-        comparison.leftCols(2) = targetTest;
-        comparison.rightCols(2) = prediction;
+        comparison.leftCols(targetTest.cols()) = targetTest;
+        comparison.rightCols(targetTest.cols()) = prediction;
     
         std::cout << "\nTargets and predictions:" << std::endl;
         std::cout << comparison << std::endl;
+        
     }
 
     std::cout << "\nMean squared error:" << std::endl;

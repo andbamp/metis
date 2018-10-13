@@ -15,14 +15,12 @@ class Regressor : public Predictor<Eigen::MatrixXd> {
 protected:
     
     // Meta-data
-    
     //! Number of output attributes, ie. number of columns on each output vector.
     unsigned _nOutputs;
 
 public:
 
     // Access
-    
     virtual Eigen::MatrixXd predict(Eigen::MatrixXd *input) const override = 0;
     
     /**

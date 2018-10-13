@@ -131,9 +131,23 @@ metis::DataContainer *metis::loadDiabetesContainer() {
     std::string filePath = "../data/diabetes.tab.txt";
     std::string missingValue = "?";
     
-    metis::DataContainer *data = new metis::DataContainer(filePath, '\t', missingValue, {0,1,2,3,4,5,6,7,8,9,10,11}, {});
+    metis::DataContainer *data =
+            new metis::DataContainer(filePath, '\t', missingValue, {0,1,2,3,4,5,6,7,8,9,10,11}, {});
     data->standardize({0,1,2,3,4,5,6,7,8,9});
     data->rescale({0,1,2,3,4,5,6,7,8,9});
     
     return data;
+    
+}
+
+metis::DataContainer *metis::loadIrisContainer() {
+    
+    std::string filePath = "../data/iris.data.txt";
+    std::string missingValue = "?";
+    
+    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {0,1,2,3}, {4});
+    data->standardize({0,1,2,3});
+    
+    return data;
+    
 }

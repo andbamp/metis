@@ -34,17 +34,18 @@ void metis::LinearRegression::simpleLinearRegression(Eigen::MatrixXd *input, Eig
 }
 
 void metis::LinearRegression::fit(Eigen::MatrixXd *input, Eigen::MatrixXd *target,
-                                     Eigen::MatrixXd *valInput, Eigen::MatrixXd *valTarget, unsigned verboseCycle) {
+                                  Eigen::MatrixXd *valInput, Eigen::MatrixXd *valTarget, unsigned verboseCycle) {
     
-    _nAttributes = input->cols();
+    // The number of linear models trained is equal to the number of output variables in the training set.
     _nOutputs = target->cols();
+    _nModels = _nOutputs;
+    _nAttributes = input->cols();
     
-    _coeff.resize(_nOutputs, _nAttributes);
-    _intercept.resize(_nOutputs);
+    _coeff.resize(_nModels, _nAttributes);
+    _intercept.resize(_nModels);
     
     if (_iterative) {
     
-        _nModels = _nOutputs;
         _coeff.setRandom();
         _intercept.setRandom();
         

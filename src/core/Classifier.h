@@ -10,19 +10,17 @@
 
 namespace metis {
 
-class Classifier : public Predictor<Eigen::VectorXi> {
+class Classifier : public Predictor<Eigen::ArrayXi> {
 
 protected:
     
     // Meta-data
-    
     //! Number of possible classes for output variable.
     unsigned _nClasses;
 
 public:
     
     // Access
-    
     /**
      * Returns probability for each given instance to belong on each class.
      *
@@ -30,9 +28,9 @@ public:
      */
     virtual Eigen::MatrixXd predictProbabilities(Eigen::MatrixXd *input) const = 0;
     
-    Eigen::VectorXi predict(Eigen::MatrixXd *input) const override;
+    Eigen::ArrayXi predict(Eigen::MatrixXd *input) const override;
     
-    double score(Eigen::MatrixXd *input, Eigen::VectorXi *target) const override;
+    double score(Eigen::MatrixXd *input, Eigen::ArrayXi *target) const override;
 
 };
 

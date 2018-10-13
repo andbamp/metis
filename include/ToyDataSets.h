@@ -19,6 +19,7 @@ DataLabeled *loadMNIST();
 DataLabeled *loadBC();
 
 DataContainer *loadDiabetesContainer();
+DataContainer *loadIrisContainer();
 
 }
 

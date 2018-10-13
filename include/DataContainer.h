@@ -51,6 +51,8 @@ public:
     Eigen::ArrayXi createClassArray(unsigned column);
     Eigen::MatrixXd createBinaryMatrix(unsigned column);
     
+    static Eigen::MatrixXd convertToBinaryMatrix(Eigen::ArrayXi *data);
+    
     void print() const;
     
     // 2b. Transformations
