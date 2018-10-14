@@ -6,8 +6,6 @@
 #include <omp.h>
 #include "demos/MetisDemos.h"
 #include "include/DataContainer.h"
-#include "include/LinearRegression.h"
-#include "include/LogisticRegression.h"
 
 //#define EIGEN_DONT_PARALLELIZE
 
@@ -23,8 +21,8 @@ int main() {
 //
 //    demoBanknotesLogisticRegression(3000, 0.1, 64, 1, 2, false);
 //    demoIrisLogisticRegression(3000000, 0.1, 64, 1, 2, false);
-    demoMNISTLogisticRegression(10, 0.1, 64, 1, 1, false);
-    demoMNISTLogisticRegression(10, 0.1, 64, 1, 2, false);
+//    demoMNISTLogisticRegression(10, 0.1, 64, 1, 1, false);
+//    demoMNISTLogisticRegression(10, 0.1, 64, 1, 2, false);
 
 
 //    demoMLPMNIST({100}, {0,0}, 1, 0.01, 60, 2);

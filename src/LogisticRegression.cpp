@@ -1,5 +1,5 @@
 //
-// Created by Andreas Bampouris on 13/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #include "../include/LogisticRegression.h"
