@@ -5,11 +5,8 @@
 #ifndef METIS_METISDEMOS_H
 #define METIS_METISDEMOS_H
 
-#include "LinRegDemo.h"
-
-#include "LogRegDemoBanknotes.h"
-#include "LogRegDemoIris.h"
-#include "LogRegDemoMNIST.h"
+#include "DemoLinearRegression.h"
+#include "DemoLogisticRegression.h"
 
 #include "MLPDemoIris.h"
 #include "MLPDemoMNIST.h"

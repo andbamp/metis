@@ -1,60 +1,55 @@
 //
-// Copyright (c) 2018 Andreas Bampouris
+// Created by Andreas Bampouris on 13/10/2018.
 //
 
 #ifndef METIS_LOGISTICREGRESSION_H
 #define METIS_LOGISTICREGRESSION_H
 
-#include "DataLabeled.h"
+
+#include "../src/core/Classifier.h"
+#include "../src/core/Optimizer.h"
 
 namespace metis {
 
-    class LogisticRegression {
+class LogisticRegression : public Classifier, public Optimizer {
 
-    private:
+private:
 
-        // 3. Structure
-        Eigen::MatrixXd _coeff;
-        Eigen::VectorXd _intercept;
 
-        unsigned _iterations = 10;
-        double _learnRate = 1;
-        unsigned _batchSize = 1;
+public:
 
-        // 4. State
-        unsigned _nAttributes;
-        unsigned _nClasses;
-
-        bool _verbose = false;
-
-        // 5. Helper methods
-        void batchGradientDescent(unsigned c);
-        void stochasticGradientDescent(unsigned c);
-
-    public:
-
-        // 2. Interface methods
-        double fit(DataLabeled *trainData, DataLabeled *testData, bool verbose);
-        double fit(DataLabeled *trainData, DataLabeled *testData);
-        double fit(DataLabeled *trainData);
-
-        Eigen::MatrixXd predictProbabilities(Eigen::MatrixXd *data) const;
-        Eigen::MatrixXd predictProbabilities(DataSet *data) const;
-
-        Eigen::VectorXi predict(Eigen::MatrixXd *data) const;
-        Eigen::VectorXi predict(DataSet *data) const;
-
-        double score(DataLabeled *data) const;
-
-        Eigen::MatrixXd getCoefficients();
-        Eigen::VectorXd getIntercepts();
-
-        // 1. Construction
-        LogisticRegression(unsigned iterations, double learnRate, unsigned batchSize);
-        LogisticRegression();
-        ~LogisticRegression();
-
-    };
+    // Access
+    /**
+     * Fits a logistic model to a certain set of labeled data.
+     *
+     * @param input Input data of training set. Each row represents an instance.
+     * @param target Output data of training set. Same number of rows as input.
+     * @param valInput Input data of validation set.
+     * @param valTarget Output data of validation set.
+     * @param verboseCycle Number of updates before user is informed for training state.
+     */
+    void fit(Eigen::MatrixXd *input, Eigen::ArrayXi *target,
+             Eigen::MatrixXd *valInput, Eigen::ArrayXi *valTarget, unsigned verboseCycle) override;
+    void fit(Eigen::MatrixXd *input, Eigen::ArrayXi *target, unsigned verboseCycle) override;
+    void fit(Eigen::MatrixXd *input, Eigen::ArrayXi *target,
+             Eigen::MatrixXd *valInput, Eigen::ArrayXi *valTarget) override;
+    void fit(Eigen::MatrixXd *input, Eigen::ArrayXi *target) override;
+    
+    Eigen::MatrixXd predictProbabilities(Eigen::MatrixXd *input) const override;
+    
+    // Construction
+    /**
+     * Creates a logistic regression classifier.
+     *
+     * @param iterations Maximum number of iterations.
+     * @param learnRate Learn rate for gradient descent.
+     * @param batchSize Size of the mini-batch. If set to 0, the full batch is used.
+     */
+    LogisticRegression(unsigned iterations, double learnRate, unsigned batchSize);
+    LogisticRegression();
+    ~LogisticRegression();
+    
+};
 
 }
 

@@ -28,7 +28,7 @@ metis::DataLabeled *metis::loadBanknotes() {
 
     metis::DataSet *input = new metis::DataSet(filePath, ',');
     input->create({0,1,2,3});
-    input->applyStandardization();
+//    input->applyStandardization();
 
     metis::DataSet *output = new metis::DataSet(filePath, ',');
     output->create({4}, {4});
@@ -138,17 +138,17 @@ metis::DataContainer *metis::loadIrisContainer() {
     
 }
 
-//metis::DataContainer *metis::loadBanknotesContainer() {
-//
-//    std::string filePath = "../data/data_banknote_authentication.txt";
-//    std::string missingValue = "?";
-//
-//    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {0,1,2,3}, {4});
+metis::DataContainer *metis::loadBanknotesContainer() {
+
+    std::string filePath = "../data/data_banknote_authentication.txt";
+    std::string missingValue = "?";
+
+    metis::DataContainer *data = new metis::DataContainer(filePath, ',', missingValue, {0,1,2,3}, {4});
 //    data->standardize({0,1,2,3});
-//
-//    return data;
-//
-//}
+
+    return data;
+
+}
 
 metis::DataContainer *metis::loadDiabetesContainer() {
     

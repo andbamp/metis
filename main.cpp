@@ -4,10 +4,10 @@
 
 #include <iostream>
 #include <omp.h>
-#include "demos/DemosMetis.h"
+#include "demos/MetisDemos.h"
 #include "include/DataContainer.h"
 #include "include/LinearRegression.h"
-#include "include/LogisticRegressionNew.h"
+#include "include/LogisticRegression.h"
 
 //#define EIGEN_DONT_PARALLELIZE
 
@@ -18,21 +18,14 @@ int main() {
     srand(time(NULL));
     rand();
 
-//    demoLinReg(true, 800000, 0.01, 64, 1, 1, false);
-//    demoLinReg(true, 800000, 0.01, 64, 2, 1, false);
-//    demoLinReg(true, 800000, 0.01, 64, 1, 2, false);
-//    demoLinReg(false, 1, 1, true);
-//    demoLinReg(false, 2, 1, false);
-    
-//    demoLogRegIris(3000000, 0.1, 64, 1, 2, false);
-//    demoLogRegIris(3000000, 0.1, 64, 1, 1, false);
+//    demoDiabetesLinearRegression(true, 800000, 0.01, 64, 1, 2, false);
+//    demoDiabetesLinearRegression(false, 2, 1, false);
+//
+//    demoBanknotesLogisticRegression(3000, 0.1, 64, 1, 2, false);
+//    demoIrisLogisticRegression(3000000, 0.1, 64, 1, 2, false);
+    demoMNISTLogisticRegression(10, 0.1, 64, 1, 1, false);
+    demoMNISTLogisticRegression(10, 0.1, 64, 1, 2, false);
 
-//    demoLogRegIris(10, 0.1, 1, 1);
-//    demoLogRegIris(100, 0.1, 1, 1);
-//    demoLogRegIris(1000, 0.1, 1, 1);
-
-//    demoLogRegMNIST(1, 0.01, 60, 1);
-//    demoLogRegMNIST(1, 0.01, 60, 2);
 
 //    demoMLPMNIST({100}, {0,0}, 1, 0.01, 60, 2);
 //    demoMLPMNIST({100}, {1,0}, 1, 0.01, 60, 2);
@@ -72,7 +65,7 @@ void demoTest() {
 //    Eigen::MatrixXd inputTest = iris.createNumericalMatrix({0,1,2,3});
 //    Eigen::ArrayXi targetTest = iris.createClassArray(4);
 //
-//    metis::LogisticRegressionNew classifier(1000, 0.01, 10);
+//    metis::LogisticRegression classifier(1000, 0.01, 10);
 //    classifier.fit(&input, &target);
 //
 //    std::cout << classifier.predict(&inputTest) << std::endl;

@@ -19,7 +19,7 @@ DataLabeled *loadMNIST();
 DataLabeled *loadBC();
 
 DataContainer *loadIrisContainer();
-//DataContainer *loadBanknotesContainer();
+DataContainer *loadBanknotesContainer();
 DataContainer *loadDiabetesContainer();
 DataContainer *loadWineContainer();
 DataContainer *loadMNISTContainer(bool testSet);

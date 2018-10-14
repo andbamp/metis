@@ -5,8 +5,8 @@
 #include "../include/ToyDataSets.h"
 #include "../include/LinearRegression.h"
 
-void demoLinReg(bool iterative, unsigned iterations, double learnRate, unsigned batchSize,
-        unsigned eigThreads, unsigned ompThreads, bool verbose) {
+void demoDiabetesLinearRegression(bool iterative, unsigned iterations, double learnRate, unsigned batchSize,
+                                  unsigned eigThreads, unsigned ompThreads, bool verbose) {
 
     if (ompThreads > 1) {
 #define EIGEN_DONT_PARALLELIZE
@@ -73,6 +73,6 @@ void demoLinReg(bool iterative, unsigned iterations, double learnRate, unsigned 
 
 }
 
-void demoLinReg(bool iterative, unsigned eigThreads, unsigned ompThreads, bool verbose) {
-    demoLinReg(iterative, 10, 0.01, 1, eigThreads, ompThreads, verbose);
+void demoDiabetesLinearRegression(bool iterative, unsigned eigThreads, unsigned ompThreads, bool verbose) {
+    demoDiabetesLinearRegression(iterative, 10, 0.01, 1, eigThreads, ompThreads, verbose);
 }
