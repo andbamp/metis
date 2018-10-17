@@ -55,6 +55,7 @@ public:
     // Access
     /**
      * Creates a matrix of continuous numerical values containing all data of certain columns.
+     *
      * @param columns C++ vector with the indices of the columns relevant to the imminent data set.
      * @return Data set represented as a MatrixXd. Each row represents an instance, each column an attribute.
      */
@@ -62,6 +63,7 @@ public:
     
     /**
      * Creates a matrix of integer values containing all data of certain columns.
+     *
      * @param columns C++ vector with the indices of the columns relevant to the imminent data set.
      * @return Data set represented as a MatrixXi. Each row represents an instance, each column an attribute.
      */
@@ -69,6 +71,7 @@ public:
     
     /**
      * Creates an 1-D array of integer values containing data of a certain column.
+     *
      * @param column Index of the relevant column.
      * @return Data set represented as an ArrayXi. Each row represents one instance's value for the relevant column.
      */
@@ -76,6 +79,7 @@ public:
     
     /**
      * Creates a matrix of binary values for the class represented on one column.
+     *
      * @param column Index of the relevant column.
      * @return Data set represented as a MatrixXd. Each row represents an instance.
      *         If column is 1, said instance belongs on the respective (according to index) class, 0 otherwise.
@@ -84,11 +88,21 @@ public:
     
     /**
      * Creates a matrix of binary values based on a 1-D array of integer values.
+     *
      * @param data Data set represented as an ArrayXi. Each row represents one instance's value for the relevant column.
      * @return Data set represented as a MatrixXd. Each row represents an instance.
      *         If column is 1, said instance belongs on the respective (according to index) class, 0 otherwise.
      */
     static Eigen::MatrixXd convertToBinaryMatrix(Eigen::ArrayXi *data);
+    
+    /**
+     * Creates matrices of input data each one of which consists of instances belonging to one class.
+     *
+     * @param data Data set represented as a MatrixXd. Each row represents an instance.
+     * @param target Data set represented as an ArrayXi. Each row represents an instance. Same size as data.
+     * @return C++ vector of pointers to MatrixXd objects, each one of which is a matrix of input data of one class.
+     */
+    static std::vector<Eigen::MatrixXd *> createPerClassMatrices(Eigen::MatrixXd *data, Eigen::ArrayXi *target);
     
     void print() const;
     
@@ -98,6 +112,7 @@ public:
     
     /**
      * Deletes all data not between given indices.
+     *
      * @param from Starting index.
      * @param to Terminal index.
      */
@@ -105,6 +120,7 @@ public:
     
     /**
      * Splits data between present DataContainer and a new one.
+     *
      * @param proportion Proportion of data to be contained on new DataContainer.
      * @return New object of DataContainer class containing proportion of data.
      */
@@ -112,6 +128,7 @@ public:
     
     /**
      * Mathematic transformations on data contained on present DataContainer.
+     *
      * @param columns Indices of columns whose data will be transformed.
      */
     void standardize(std::vector<unsigned> columns);
@@ -122,6 +139,7 @@ public:
     // Construction
     /**
      * Creates new DataContainer.
+     *
      * @param data Numerical data contained.
      * @param catData Categorical data contained.
      * @param catItoS Names of each class on each categorical attribute.
@@ -132,6 +150,7 @@ public:
     
     /**
      * Creates new DataContainer based on file.
+     *
      * @param filePath Location of file.
      * @param separatorChar Character separating the columns of each row.
      * @param missingValue String signaling missing values on file.

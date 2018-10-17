@@ -431,6 +431,45 @@ metis::DataContainer::DataContainer(std::string &filePath, char separatorChar, s
     
 }
 
+std::vector<Eigen::MatrixXd *> metis::DataContainer::createPerClassMatrices(Eigen::MatrixXd *data,
+                                                                            Eigen::ArrayXi *target) {
+    
+    unsigned nInstances = data->rows();
+    unsigned nAttributes = data->cols();
+    
+    // Number of classes is initially unknown and is determined by reading target data.
+    // During that process, indices of values contained on each class are also kept on a vector.
+    unsigned nClasses = 0;
+    std::vector<std::vector<unsigned>> exampleInClass;
+    for (unsigned i = 0; i < nInstances; ++i) {
+        
+        // If there are more classes than initially estimated, vector is expanded.
+        if (target->coeff(i) >= nClasses) {
+            nClasses = target->coeff(i) + 1;
+            unsigned vectorExpansion = nClasses - exampleInClass.size();
+            for (unsigned x = 0; x < vectorExpansion; ++x) {
+                exampleInClass.push_back({});
+            }
+        }
+        
+        exampleInClass[target->coeff(i)].push_back(i);
+        
+    }
+    
+    // A number of data sets equal to the number of classes is created.
+    std::vector<Eigen::MatrixXd *> dividedData;
+    
+    for (unsigned c = 0; c < nClasses; ++c) {
+        dividedData.push_back(new Eigen::MatrixXd(exampleInClass[c].size(), nAttributes));
+        for (unsigned i = 0; i < exampleInClass[c].size(); ++i) {
+            dividedData.back()->row(i) = data->row(exampleInClass[c][i]);
+        }
+    }
+    
+    return dividedData;
+    
+}
+
 metis::DataContainer::DataContainer(std::string &filePath, char separatorChar, std::string &missingValue,
                               std::vector<unsigned> attributes, std::vector<unsigned> catAttributes) :
         DataContainer(filePath, separatorChar, missingValue, attributes, catAttributes, {}, {}) {
