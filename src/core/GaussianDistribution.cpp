@@ -58,6 +58,7 @@ std::vector<metis::GaussianDistribution *> metis::GaussianDistribution::createCl
         
         distributions[c] = new GaussianDistribution();
         distributions[c]->fit(dividedData[c]);
+        delete dividedData[c];
         
     }
     
