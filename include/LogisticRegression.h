@@ -11,7 +11,7 @@
 
 namespace metis {
 
-class LogisticRegression : public Classifier, public Optimizer {
+class LogisticRegression : public Classifier<Eigen::MatrixXd>, public Optimizer {
 
 private:
 

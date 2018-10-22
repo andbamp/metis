@@ -4,13 +4,14 @@
 
 #include "Classifier.h"
 
-Eigen::ArrayXi metis::Classifier::predict(Eigen::MatrixXd *input) const {
-    
-    unsigned nInstances = input->rows();
-    Eigen::ArrayXi prediction(nInstances);
+template <class I>
+Eigen::ArrayXi metis::Classifier<I>::predict(I *input) const {
     
     // Calculates the probability of each instance belonging to each class.
     Eigen::MatrixXd probabilities = predictProbabilities(input);
+    
+    unsigned nInstances = probabilities.rows();
+    Eigen::ArrayXi prediction(nInstances);
     
     // Applies the one-vs.-rest classification strategy,
     // ie. chooses the class with maximum probability for each instance.
@@ -33,13 +34,13 @@ Eigen::ArrayXi metis::Classifier::predict(Eigen::MatrixXd *input) const {
     
 }
 
-double metis::Classifier::score(Eigen::MatrixXd *input, Eigen::ArrayXi *target) const {
-    
-    unsigned nInstances = input->rows();
-    Eigen::ArrayXi predictions(nInstances);
+template <class I>
+double metis::Classifier<I>::score(I *input, Eigen::ArrayXi *target) const {
     
     // Determines class of each instance.
-    predictions = predict(input);
+    Eigen::ArrayXi predictions = predict(input);
+    
+    unsigned nInstances = predictions.rows();
     
     // Compares predicted results with target values.
     unsigned correct = 0;
@@ -52,3 +53,6 @@ double metis::Classifier::score(Eigen::MatrixXd *input, Eigen::ArrayXi *target) 
     return (double)correct / (double)nInstances;
     
 }
+
+template class metis::Classifier<Eigen::MatrixXd>;
+template class metis::Classifier<Eigen::MatrixXi>;

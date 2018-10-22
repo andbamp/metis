@@ -7,10 +7,12 @@
 
 
 #include "Predictor.h"
+#include <Eigen/Dense>
 
 namespace metis {
 
-class Classifier : public Predictor<Eigen::ArrayXi> {
+template <class I>
+class Classifier : public Predictor<I, Eigen::ArrayXi> {
 
 protected:
     
@@ -24,13 +26,13 @@ public:
     /**
      * Returns probability for each given instance to belong on each class.
      *
-     * @param input Input data. Each row represents an instance.
+     * @param input Input data with unknown output.
      */
-    virtual Eigen::MatrixXd predictProbabilities(Eigen::MatrixXd *input) const = 0;
+    virtual Eigen::MatrixXd predictProbabilities(I *input) const = 0;
     
-    Eigen::ArrayXi predict(Eigen::MatrixXd *input) const override;
+    Eigen::ArrayXi predict(I *input) const override;
     
-    double score(Eigen::MatrixXd *input, Eigen::ArrayXi *target) const override;
+    double score(I *input, Eigen::ArrayXi *target) const override;
 
 };
 

@@ -4,7 +4,8 @@
 
 #include "Regressor.h"
 
-Eigen::VectorXd metis::Regressor::findMSE(Eigen::MatrixXd *input, Eigen::MatrixXd *target) const {
+template <class I>
+Eigen::VectorXd metis::Regressor<I>::findMSE(I *input, Eigen::MatrixXd *target) const {
     
     // Finds regression predictions.
     Eigen::MatrixXd prediction = predict(input);
@@ -17,9 +18,13 @@ Eigen::VectorXd metis::Regressor::findMSE(Eigen::MatrixXd *input, Eigen::MatrixX
     
 }
 
-double metis::Regressor::score(Eigen::MatrixXd *input, Eigen::MatrixXd *target) const {
+template <class I>
+double metis::Regressor<I>::score(I *input, Eigen::MatrixXd *target) const {
     
-    // Finds mean-squared errors for each class and returns mean.
+    // Finds mean-squared errors for each output variable and returns mean.
     return findMSE(input, target).mean();
     
 }
+
+template class metis::Regressor<Eigen::MatrixXd>;
+template class metis::Regressor<Eigen::MatrixXi>;

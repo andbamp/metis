@@ -17,7 +17,7 @@ int main() {
     srand(time(NULL));
     rand();
     
-    demoTest();
+//    demoTest();
     
 //    demoDiabetesLinearRegression(true, 800000, 0.01, 64, 1, 2, false);
 //    demoDiabetesLinearRegression(false, 2, 1, false);

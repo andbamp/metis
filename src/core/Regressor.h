@@ -7,10 +7,12 @@
 
 
 #include "Predictor.h"
+#include <Eigen/Dense>
 
 namespace metis {
 
-class Regressor : public Predictor<Eigen::MatrixXd> {
+template <class I>
+class Regressor : public Predictor<I, Eigen::MatrixXd> {
 
 protected:
     
@@ -21,17 +23,17 @@ protected:
 public:
 
     // Access
-    virtual Eigen::MatrixXd predict(Eigen::MatrixXd *input) const override = 0;
+    virtual Eigen::MatrixXd predict(I *input) const override = 0;
     
     /**
      * Returns mean-squared error for each output variable.
      *
-     * @param input Input data of test set. Each row represents an instance.
-     * @param target Output data of test set. Same number of rows as input.
+     * @param input Input data of test set.
+     * @param target Output data of test set.
      */
-    Eigen::VectorXd findMSE(Eigen::MatrixXd *input, Eigen::MatrixXd *target) const;
+    Eigen::VectorXd findMSE(I *input, Eigen::MatrixXd *target) const;
     
-    double score(Eigen::MatrixXd *input, Eigen::MatrixXd *target) const override;
+    double score(I *input, Eigen::MatrixXd *target) const override;
 
 };
 

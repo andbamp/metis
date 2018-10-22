@@ -6,18 +6,16 @@
 #define METIS_PREDICTOR_H
 
 
-#include <Eigen/Dense>
-
 namespace metis {
 
-template <class T>
+template <class I, class T>
 class Predictor {
 
 protected:
 
     // Meta-data
     
-    //! Number of input attributes, ie. number of columns on each input vector.
+    //! Number of input attributes.
     unsigned _nAttributes;
 
 public:
@@ -27,32 +25,31 @@ public:
     /**
      * General method for fitting a model to a certain set of labeled data.
      *
-     * @param input Input data of training set. Each row represents an instance.
-     * @param target Output data of training set. Same number of rows as input.
+     * @param input Input data of training set.
+     * @param target Output data of training set.
      * @param valInput Input data of validation set.
      * @param valTarget Output data of validation set.
      * @param verboseCycle Number of updates before user is informed for training state.
      */
-    virtual void fit(Eigen::MatrixXd *input, T *target, Eigen::MatrixXd *valInput, T *valTarget,
-                     unsigned verboseCycle) = 0;
-    virtual void fit(Eigen::MatrixXd *input, T *target, unsigned verboseCycle);
-    virtual void fit(Eigen::MatrixXd *input, T *target, Eigen::MatrixXd *valInput, T *valTarget);
-    virtual void fit(Eigen::MatrixXd *input, T *target);
+    virtual void fit(I *input, T *target, I *valInput, T *valTarget, unsigned verboseCycle) = 0;
+    virtual void fit(I *input, T *target, unsigned verboseCycle);
+    virtual void fit(I *input, T *target, I *valInput, T *valTarget);
+    virtual void fit(I *input, T *target);
     
     /**
      * General method for predicting output for a given input.
      *
-     * @param input Input data. Each row represents an instance.
+     * @param input Input data with unknown output.
      */
-    virtual T predict(Eigen::MatrixXd *input) const = 0;
+    virtual T predict(I *input) const = 0;
     
     /**
      * General method for assessing correctness.
      *
-     * @param input Input data of test set. Each row represents an instance.
-     * @param target Output data of test set. Same number of rows as input.
+     * @param input Input data of test set.
+     * @param target Output data of test set.
      */
-    virtual double score(Eigen::MatrixXd *input, T *target) const = 0;
+    virtual double score(I *input, T *target) const = 0;
 
 };
 

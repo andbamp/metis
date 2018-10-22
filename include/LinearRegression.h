@@ -11,7 +11,7 @@
 
 namespace metis {
 
-class LinearRegression : public Regressor, public Optimizer {
+class LinearRegression : public Regressor<Eigen::MatrixXd>, public Optimizer {
 
 private:
 
