@@ -1,5 +1,5 @@
 //
-// Created by Andreas Bampouris on 11/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #ifndef METIS_DATACONTAINER_H
@@ -103,6 +103,14 @@ public:
      * @return C++ vector of pointers to MatrixXd objects, each one of which is a matrix of input data of one class.
      */
     static std::vector<Eigen::MatrixXd *> createPerClassMatrices(Eigen::MatrixXd *data, Eigen::ArrayXi *target);
+    
+    /**
+     * Determines the number of categories for each categorical attribute in data.
+     *
+     * @param data Data set represented as a MatrixXd. Each row represents an instance
+     * @return ArrayXi with number of categories on each attribute.
+     */
+    static Eigen::ArrayXi findNumberOfCategories(Eigen::MatrixXi *data);
     
     void print() const;
     
