@@ -19,9 +19,7 @@ protected:
     
     // Meta-data
     
-    //! Number of attributes.
-    unsigned _nAttributes = 1;
-
+    
 public:
 
     // Access

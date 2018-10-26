@@ -6,13 +6,13 @@
 
 void metis::GaussianDistribution::fit(Eigen::MatrixXd *data) {
 
-    _nAttributes = data->cols();
     unsigned nInstances = data->rows();
+    unsigned nAttributes = data->cols();
     
-    _means.resize(_nAttributes);
-    _stDev.resize(_nAttributes);
+    _means.resize(nAttributes);
+    _stDev.resize(nAttributes);
     
-    for (unsigned a = 0; a < _nAttributes; ++a) {
+    for (unsigned a = 0; a < nAttributes; ++a) {
         _means.coeffRef(a) = data->col(a).mean();
         _stDev.coeffRef(a) = std::sqrt( (data->col(a).array() - _means.coeff(a)).square().sum() / (nInstances - 1) );
     }
@@ -22,9 +22,10 @@ void metis::GaussianDistribution::fit(Eigen::MatrixXd *data) {
 Eigen::MatrixXd metis::GaussianDistribution::findProbability(Eigen::MatrixXd *data) const {
     
     unsigned nInstances = data->rows();
-    Eigen::MatrixXd probability(nInstances, _nAttributes);
+    unsigned nAttributes = data->cols();
+    Eigen::MatrixXd probability(nInstances, nAttributes);
     
-    for (unsigned a = 0; a < _nAttributes; ++a) {
+    for (unsigned a = 0; a < nAttributes; ++a) {
         probability.col(a) = findProbability(data, a);
     }
     

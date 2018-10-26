@@ -7,15 +7,15 @@
 
 void metis::Frequency::fit(Eigen::MatrixXi *data) {
 
-    _nAttributes = data->cols();
     unsigned nInstances = data->rows();
+    unsigned nAttributes = data->cols();
     
     // Finds number of categories for each attribute.
     Eigen::ArrayXi nCategories = DataContainer::findNumberOfCategories(data);
-    _frequencies.resize(_nAttributes);
+    _frequencies.resize(nAttributes);
     
     // Goes through data to find frequencies of each distinct value of each attribute.
-    for (unsigned a = 0; a < _nAttributes; ++a) {
+    for (unsigned a = 0; a < nAttributes; ++a) {
     
         _frequencies[a].resize(nCategories.coeff(a));
         _frequencies[a].setZero();
@@ -33,9 +33,10 @@ void metis::Frequency::fit(Eigen::MatrixXi *data) {
 Eigen::MatrixXd metis::Frequency::findProbability(Eigen::MatrixXi *data) const {
     
     unsigned nInstances = data->rows();
-    Eigen::MatrixXd probability(nInstances, _nAttributes);
+    unsigned nAttributes = data->cols();
+    Eigen::MatrixXd probability(nInstances, nAttributes);
     
-    for (unsigned a = 0; a < _nAttributes; ++a) {
+    for (unsigned a = 0; a < nAttributes; ++a) {
         for (unsigned i = 0; i < nInstances; ++i) {
             probability.coeffRef(i, a) = _frequencies[a].coeff(data->coeff(a));
         }
@@ -56,4 +57,13 @@ Eigen::VectorXd metis::Frequency::findProbability(Eigen::MatrixXi *data, unsigne
     
     return probability;
     
+}
+
+double metis::Frequency::getFrequency(unsigned value, unsigned attribute) {
+    return _frequencies[attribute].coeff(value);
+}
+
+double metis::Frequency::getFrequency(unsigned value) {
+    // When no attribute is given, index 0 of std::vector is assumed.
+    return getFrequency(value, 0);
 }

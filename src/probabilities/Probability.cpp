@@ -1,7 +1,8 @@
 //
-// Created by Andreas Bampouris on 23/10/2018.
+// Copyright (c) 2018 Andreas Bampouris
 //
 
 #include "Probability.h"
 
-
+template class metis::Probability<Eigen::MatrixXd>;
+template class metis::Probability<Eigen::MatrixXi>;

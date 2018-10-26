@@ -19,7 +19,7 @@ private:
     
     //! Frequency for each attribute.
     std::vector<Eigen::VectorXd> _frequencies;
-
+    
 public:
     
     // Access
@@ -39,7 +39,17 @@ public:
      */
     Eigen::MatrixXd findProbability(Eigen::MatrixXi *data) const;
     Eigen::VectorXd findProbability(Eigen::MatrixXi *data, unsigned attr) const;
-
+    
+    /**
+     * Getter of the frequency of one particular value of one attribute.
+     *
+     * @param value Distinct categorical value.
+     * @param attribute Attribute it refers to.
+     * @return Frequency value in the requested index of _frequencies.
+     */
+    double getFrequency(unsigned value, unsigned attribute);
+    double getFrequency(unsigned value);
+    
 };
 
 }
