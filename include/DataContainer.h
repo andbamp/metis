@@ -102,7 +102,10 @@ public:
      * @param target Data set represented as an ArrayXi. Each row represents an instance. Same size as data.
      * @return C++ vector of pointers to MatrixXd objects, each one of which is a matrix of input data of one class.
      */
+    template <class M>
+    static std::vector<M *> createPerClassMatrices(M *data, Eigen::ArrayXi *target);
     static std::vector<Eigen::MatrixXd *> createPerClassMatrices(Eigen::MatrixXd *data, Eigen::ArrayXi *target);
+    static std::vector<Eigen::MatrixXi *> createPerClassMatrices(Eigen::MatrixXi *data, Eigen::ArrayXi *target);
     
     /**
      * Determines the number of categories for each categorical attribute in data.
@@ -110,7 +113,11 @@ public:
      * @param data Data set represented as a MatrixXd. Each row represents an instance
      * @return ArrayXi with number of categories on each attribute.
      */
+    template <class D>
+    static Eigen::ArrayXi findNumberOfCategories(D *data);
     static Eigen::ArrayXi findNumberOfCategories(Eigen::MatrixXi *data);
+    static Eigen::ArrayXi findNumberOfCategories(Eigen::VectorXi *data);
+    static Eigen::ArrayXi findNumberOfCategories(Eigen::ArrayXi *data);
     
     void print() const;
     

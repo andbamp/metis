@@ -115,7 +115,7 @@ metis::DataLabeled *metis::loadBC() {
     std::string filePath = "../data/breast-cancer.data.txt";
 
     metis::DataSet *input = new metis::DataSet(filePath, ',');
-    input->create({1,2,3,4,5,6,7,8}, {1,2,3,4,5,6,7,8});
+    input->create({1,2,3,4,5,6,7,8,9}, {1,2,3,4,5,6,7,8,9});
 
     metis::DataSet *output = new metis::DataSet(filePath, ',');
     output->create({0}, {0});

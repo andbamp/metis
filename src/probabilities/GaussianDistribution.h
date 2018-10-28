@@ -31,7 +31,7 @@ public:
      *
      * @param data Data for which the probabilistic model is built.
      */
-    void fit(Eigen::MatrixXd *data);
+    void fit(Eigen::MatrixXd *data) override;
     
     /**
      * Calculates probabilities of input data assuming normal distribution.
@@ -39,8 +39,8 @@ public:
      * @param data Data the probabilities of which are calculated.
      * @return MatrixXd for probabilities of values of each attribute.
      */
-    Eigen::MatrixXd findProbability(Eigen::MatrixXd *data) const;
-    Eigen::VectorXd findProbability(Eigen::MatrixXd *data, unsigned attr) const;
+    Eigen::MatrixXd findProbability(Eigen::MatrixXd *data) const override;
+    Eigen::VectorXd findProbability(Eigen::MatrixXd *data, unsigned attr) const override;
     
 };
 

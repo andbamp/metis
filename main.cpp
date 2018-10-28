@@ -8,17 +8,15 @@
 #include "include/DataContainer.h"
 #include "src/probabilities/Frequency.h"
 #include "src/probabilities/GaussianDistribution.h"
+#include "include/GaussianNaiveBayes.h"
+#include "include/MultinomialNaiveBayes.h"
 
 //#define EIGEN_DONT_PARALLELIZE
-
-void demoTest();
 
 int main() {
 
     srand(time(NULL));
     rand();
-    
-    demoTest();
     
 //    demoDiabetesLinearRegression(true, 800000, 0.01, 64, 1, 2, false);
 //    demoDiabetesLinearRegression(false, 2, 1, false);
@@ -27,6 +25,11 @@ int main() {
 //    demoIrisLogisticRegression(3000000, 0.1, 64, 1, 2, false);
 //    demoMNISTLogisticRegression(10, 0.1, 64, 1, 1, false);
 //    demoMNISTLogisticRegression(10, 0.1, 64, 1, 2, false);
+    
+    demoIrisGaussianNaiveBayes(1,1,false);
+    demoGaussianNB(1);
+    demoBCMultinomialNaiveBayes(1,1,false);
+    demoMultinomialNB(1);
 
 
 //    demoMLPMNIST({100}, {0,0}, 1, 0.01, 60, 2);
@@ -53,22 +56,4 @@ int main() {
 //
 //    demoKMeansIris(3, 0);
 
-}
-
-void demoTest() {
-    
-    metis::DataContainer *iris = metis::loadIrisContainer();
-    Eigen::MatrixXd input = iris->createNumericalMatrix({0,1,2,3});
-    Eigen::MatrixXi output = iris->createCategoricalMatrix({4});
-    Eigen::ArrayXi target = iris->createClassArray(4);
-    
-    metis::Frequency freq;
-    freq.fit(&output);
-    
-    metis::GaussianDistribution gauss;
-    gauss.fit(&input);
-    
-    std::cout << freq.findProbability(&output) << std::endl;
-    std::cout << gauss.findProbability(&input) << std::endl;
-    
 }

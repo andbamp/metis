@@ -7,6 +7,7 @@
 
 #include "DemoLinearRegression.h"
 #include "DemoLogisticRegression.h"
+#include "DemoNaiveBayes.h"
 
 #include "MLPDemoIris.h"
 #include "MLPDemoMNIST.h"

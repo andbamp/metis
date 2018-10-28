@@ -365,8 +365,8 @@ void metis::DataContainer::readFile(std::string &filePath, char separatorChar, s
     
 }
 
-std::vector<Eigen::MatrixXd *> metis::DataContainer::createPerClassMatrices(Eigen::MatrixXd *data,
-                                                                            Eigen::ArrayXi *target) {
+template <class M>
+std::vector<M *> metis::DataContainer::createPerClassMatrices(M *data, Eigen::ArrayXi *target) {
     
     unsigned nInstances = data->rows();
     unsigned nAttributes = data->cols();
@@ -391,10 +391,10 @@ std::vector<Eigen::MatrixXd *> metis::DataContainer::createPerClassMatrices(Eige
     }
     
     // A number of data sets equal to the number of classes is created.
-    std::vector<Eigen::MatrixXd *> dividedData;
+    std::vector<M *> dividedData;
     
     for (unsigned c = 0; c < nClasses; ++c) {
-        dividedData.push_back(new Eigen::MatrixXd(exampleInClass[c].size(), nAttributes));
+        dividedData.push_back(new M(exampleInClass[c].size(), nAttributes));
         for (unsigned i = 0; i < exampleInClass[c].size(); ++i) {
             dividedData.back()->row(i) = data->row(exampleInClass[c][i]);
         }
@@ -404,7 +404,18 @@ std::vector<Eigen::MatrixXd *> metis::DataContainer::createPerClassMatrices(Eige
     
 }
 
-Eigen::ArrayXi metis::DataContainer::findNumberOfCategories(Eigen::MatrixXi *data) {
+std::vector<Eigen::MatrixXd *> metis::DataContainer::createPerClassMatrices(Eigen::MatrixXd *data,
+                                                                            Eigen::ArrayXi *target) {
+    return createPerClassMatrices<Eigen::MatrixXd>(data, target);
+}
+
+std::vector<Eigen::MatrixXi *> metis::DataContainer::createPerClassMatrices(Eigen::MatrixXi *data,
+                                                                            Eigen::ArrayXi *target) {
+    return createPerClassMatrices<Eigen::MatrixXi>(data, target);
+}
+
+template <class D>
+Eigen::ArrayXi metis::DataContainer::findNumberOfCategories(D *data) {
     
     unsigned nAttributes = data->cols();
     unsigned nInstances = data->rows();
@@ -422,6 +433,19 @@ Eigen::ArrayXi metis::DataContainer::findNumberOfCategories(Eigen::MatrixXi *dat
     
     return nCategories;
     
+}
+
+
+Eigen::ArrayXi metis::DataContainer::findNumberOfCategories(Eigen::MatrixXi *data) {
+    return findNumberOfCategories<Eigen::MatrixXi>(data);
+}
+
+Eigen::ArrayXi metis::DataContainer::findNumberOfCategories(Eigen::VectorXi *data) {
+    return findNumberOfCategories<Eigen::VectorXi>(data);
+}
+
+Eigen::ArrayXi metis::DataContainer::findNumberOfCategories(Eigen::ArrayXi *data) {
+    return findNumberOfCategories<Eigen::ArrayXi>(data);
 }
 
 metis::DataContainer::DataContainer(std::string &filePath, char separatorChar, std::string &missingValue,

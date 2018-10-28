@@ -2,9 +2,6 @@
 // Copyright (c) 2018 Andreas Bampouris
 //
 
-#ifndef METIS_LOGREGDEMOIRIS_H
-#define METIS_LOGREGDEMOIRIS_H
-
 #include "../include/LogisticRegression.h"
 #include "../include/ToyDataSets.h"
 
@@ -213,5 +210,3 @@ void demoMNISTLogisticRegression(unsigned iterations, double learnRate, unsigned
     }
     
 }
-
-#endif //METIS_LOGREGDEMOIRIS_H
