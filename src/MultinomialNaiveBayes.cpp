@@ -43,16 +43,3 @@ void metis::MultinomialNaiveBayes::fit(Eigen::MatrixXi *input, Eigen::ArrayXi *t
 Eigen::MatrixXd metis::MultinomialNaiveBayes::predictProbabilities(Eigen::MatrixXi *input) const {
     return findPosterior(input);
 }
-
-Eigen::MatrixXd metis::MultinomialNaiveBayes::findPosterior(Eigen::MatrixXi *data) const {
-    return BayesianModel::findPosterior(data);
-}
-
-Eigen::VectorXd metis::MultinomialNaiveBayes::findLikelihood(Eigen::MatrixXi *data, unsigned attr,
-                                                             unsigned condition) const {
-    return BayesianModel::findLikelihood(data, attr, condition);
-}
-
-Eigen::VectorXd metis::MultinomialNaiveBayes::findEvidence(Eigen::MatrixXi *data) const {
-    return BayesianModel::findEvidence(data);
-}

@@ -3,13 +3,7 @@
 //
 
 #include <iostream>
-#include <omp.h>
 #include "demos/MetisDemos.h"
-#include "include/DataContainer.h"
-#include "src/probabilities/Frequency.h"
-#include "src/probabilities/GaussianDistribution.h"
-#include "include/GaussianNaiveBayes.h"
-#include "include/MultinomialNaiveBayes.h"
 
 //#define EIGEN_DONT_PARALLELIZE
 

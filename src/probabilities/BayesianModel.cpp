@@ -10,20 +10,35 @@
 template<class D, class P>
 void metis::BayesianModel<D, P>::determineProbabilities(D *input, Eigen::ArrayXi *target) {
     
+    //!!! Extra cost a result of separating loop that took care of both prior and likelihood
+    double before = omp_get_wtime();
+    
     _prior.fit(target);
     _evidence.fit(input);
     
+    double after = omp_get_wtime();
+    std::cout << "1: " << after - before << "sec" << std::endl;
+    
+    //!!! Costliest operation here
+    before = omp_get_wtime();
     std::vector<D *> dividedData = DataContainer::createPerClassMatrices<D>(input, target);
+    after = omp_get_wtime();
+    std::cout << "2: " << after - before << "sec" << std::endl;
+    
+    //!!! In other implementation, only indices of separated data are kept, and datasets are created on-demand
+    // Never are all divided datasets kept in memory at the same time
+    before = omp_get_wtime();
     _nConditions = dividedData.size();
     _likelihood.resize(_nConditions);
-    
     for (unsigned c = 0; c < _nConditions; ++c) {
         
         _likelihood[c] = new P();
         _likelihood[c]->fit(dividedData[c]);
         delete dividedData[c];
-    
+        
     }
+    after = omp_get_wtime();
+    std::cout << "3: " << after - before << "sec" << std::endl;
     
 }
 

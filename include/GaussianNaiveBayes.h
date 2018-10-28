@@ -19,7 +19,6 @@ private:
 
     // Data
     
-
 public:
 
     // Access
@@ -32,10 +31,6 @@ public:
     void fit(Eigen::MatrixXd *input, Eigen::ArrayXi *target) override;
     
     Eigen::MatrixXd predictProbabilities(Eigen::MatrixXd *input) const override;
-    
-    Eigen::MatrixXd findPosterior(Eigen::MatrixXd *data) const;
-    Eigen::VectorXd findLikelihood(Eigen::MatrixXd *data, unsigned attr, unsigned condition) const;
-    Eigen::VectorXd findEvidence(Eigen::MatrixXd *data) const;
 
 };
 

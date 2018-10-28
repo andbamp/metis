@@ -31,10 +31,6 @@ public:
     void fit(Eigen::MatrixXi *input, Eigen::ArrayXi *target) override;
     
     Eigen::MatrixXd predictProbabilities(Eigen::MatrixXi *input) const override;
-    
-    Eigen::MatrixXd findPosterior(Eigen::MatrixXi *data) const;
-    Eigen::VectorXd findLikelihood(Eigen::MatrixXi *data, unsigned attr, unsigned condition) const;
-    Eigen::VectorXd findEvidence(Eigen::MatrixXi *data) const;
 
 };
 
