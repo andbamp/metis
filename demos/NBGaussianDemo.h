@@ -34,7 +34,7 @@ void demoGaussianNB(unsigned nThread) {
     comparison.col(5) = predictionProb.row(2).transpose();
 
     std::cout << "\nPredictions:" << std::endl;
-    std::cout << comparison << std::endl;
+//    std::cout << comparison << std::endl;
 
     std::cout << "\nAccuracy on test set:" << std::endl;
     std::cout << gnb.score(irisTest, false) << std::endl;

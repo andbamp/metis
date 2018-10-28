@@ -37,7 +37,7 @@ void demoMultinomialNB(unsigned nThread) {
     comparison.col(9) = mnb.findPrior(bcTest->getOutputs()->getData());
 
     std::cout << "\nPredictions:" << std::endl;
-    std::cout << comparison << std::endl;
+//    std::cout << comparison << std::endl;
 
     std::cout << "\nAccuracy on test set:" << std::endl;
     std::cout << mnb.score(bcTest, false) << std::endl;
